@@ -1,0 +1,26 @@
+async function runAnalysis() {
+    const statusDiv = document.getElementById('status');
+    statusDiv.innerText = "Analyzing... please wait.";
+
+    try {
+        // REPLACE THIS URL with your actual Render/Railway URL
+        const BACKEND_URL = "https://your-app-name.onrender.com/api/analyze";
+
+        const response = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ role: "frontend" })
+        });
+
+        if (!response.ok) throw new Error("Backend reached but error returned");
+
+        const data = await response.json();
+        console.log("Success:", data);
+        statusDiv.innerText = "Analysis Complete!";
+        // Update your chart here...
+        
+    } catch (error) {
+        console.error("Fetch Error:", error);
+        statusDiv.innerText = "Error: Could not connect to backend. Check Console.";
+    }
+}
